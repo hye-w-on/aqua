@@ -1,41 +1,39 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import SessionUtil, { SessionInfo } from "../utils/SessionUtil";
+import sessionApi from "../api/session";
+import { SessionInfo, setSessionInfo } from "../utils/SessionUtil";
 
 const SocialRedirectHandler = () => {
-  const { socialType } = useParams();
+  const { socialPlatform } = useParams();
   const [searchParams] = useSearchParams();
   const authCode = searchParams.get("code");
 
   let navigate = useNavigate();
-  const sessionUtil = new SessionUtil();
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getInfo = async () => {
-    const loginRequest = {
-      socialTypeCode: socialType,
-      authCode: authCode,
-    };
-
-    const { successOrNot, statusCode, data } = {};
-    //await sessionApi.socialLogin(loginRequest);
-
-    if (successOrNot === "Y") {
-      const sessionInfo: SessionInfo = { ...data };
-
-      sessionUtil.setSessionInfo(sessionInfo);
-
-      navigate("/login", { replace: true });
-    } else if (successOrNot === "N" && statusCode === "USER_NOT_FOUND") {
-      navigate("/singup", { replace: true });
-    }
-  };
 
   useEffect(() => {
-    if (authCode) {
-      getInfo();
-    }
-  }, [authCode, getInfo]);
+    const getUserInfo = async () => {
+      const { successOrNot, statusCode, data } = await sessionApi.socialLogin(
+        socialPlatform ?? "",
+        authCode ?? ""
+      );
+
+      if (successOrNot === "Y") {
+        const sessionInfo: SessionInfo = { ...data };
+        console.log("sessionInfo", sessionInfo);
+        setSessionInfo(sessionInfo);
+
+        // navigate("/login", { replace: true });
+      } else if (
+        successOrNot === "N" &&
+        statusCode === "NOT_MEMBER_AND_SIGN_UP"
+      ) {
+        console.log("data: ", data);
+        // navigate("/singup", { replace: true });
+      }
+    };
+
+    getUserInfo();
+  }, []);
 
   return <>...Loading</>;
 };

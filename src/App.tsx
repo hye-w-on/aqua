@@ -9,7 +9,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/oauth/:socialType" element={<SocialRedirectHandler />} />
+        <Route
+          path="/oauth/:socialPlatform"
+          element={<SocialRedirectHandler />}
+        />
       </Routes>
     </BrowserRouter>
   );

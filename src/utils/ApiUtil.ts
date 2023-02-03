@@ -10,7 +10,7 @@ export enum Service {
   AQUA_ADMIN_BE = "aqua-admin-be",
 }
 export enum ServicePort {
-  AQUA_BE = 7070,
+  AQUA_BE = 8080,
   AQUA_ADMIN_BE = 7071,
 }
 
