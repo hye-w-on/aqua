@@ -22,13 +22,13 @@ const SocialRedirectHandler = () => {
         console.log("sessionInfo", sessionInfo);
         setSessionInfo(sessionInfo);
 
-        // navigate("/login", { replace: true });
+        navigate("/login", { replace: true });
       } else if (
         successOrNot === "N" &&
         statusCode === "NOT_MEMBER_AND_SIGN_UP"
       ) {
         console.log("data: ", data);
-        // navigate("/singup", { replace: true });
+        navigate("/singup", { replace: true });
       }
     };
 
