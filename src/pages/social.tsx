@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import sessionApi from "../api/session";
 import { SessionInfo, setSessionInfo } from "../utils/SessionUtil";
@@ -28,7 +28,7 @@ const SocialRedirectHandler = () => {
         statusCode === "NOT_MEMBER_AND_SIGN_UP"
       ) {
         console.log("data: ", data);
-        navigate("/singup", { replace: true });
+        navigate("/signup", { replace: true, state: data });
       }
     };
 
