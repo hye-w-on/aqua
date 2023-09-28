@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
 export interface CommonResponse<T = any> {
   successOrNot: string;
@@ -6,8 +6,8 @@ export interface CommonResponse<T = any> {
   data?: T;
 }
 export enum Service {
-  AQUA_BE = "aqua-be",
-  AQUA_ADMIN_BE = "aqua-admin-be",
+  AQUA_BE = 'aqua-be',
+  AQUA_ADMIN_BE = 'aqua-admin-be',
 }
 export enum ServicePort {
   AQUA_BE = 8080,
@@ -15,12 +15,12 @@ export enum ServicePort {
 }
 
 const getInstance = (serviceName: string, params?: any): AxiosInstance => {
-  axios.defaults.headers.post["Content-Type"] = "application/json";
+  axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-  let baseURL = "";
+  let baseURL = '';
   switch (serviceName) {
     case Service.AQUA_BE:
-      if (process.env.REACT_APP_NODE_ENV === "local") {
+      if (process.env.REACT_APP_NODE_ENV === 'local') {
         baseURL = `${process.env.REACT_APP_API_BASE_URL}:${ServicePort.AQUA_BE}`;
       }
       break;
@@ -43,7 +43,7 @@ const getInstance = (serviceName: string, params?: any): AxiosInstance => {
         //config.headers["x-api-key"] = process.env.REACT_APP_API_KEY || "";
         //config.headers["x-correlation-id"] = "";
         //config.headers["x-session-id"] = "sessionId";
-        config.headers.Authorization = localStorage.getItem("idToken");
+        config.headers.Authorization = localStorage.getItem('idToken');
       }
       return config;
     },
@@ -56,25 +56,22 @@ const getInstance = (serviceName: string, params?: any): AxiosInstance => {
     async (response: any): Promise<any> => {
       const commonResponse: CommonResponse = response.data as CommonResponse;
 
-      if (
-        commonResponse.statusCode &&
-        commonResponse.statusCode === "SESSION_EXPIRE"
-      ) {
+      if (commonResponse.statusCode && commonResponse.statusCode === 'SESSION_EXPIRE') {
         sessionStorage.clear();
-        window.location.assign("/login");
+        window.location.assign('/login');
       }
       return commonResponse;
     },
 
     async (error: any): Promise<any> => {
       const unknownError: CommonResponse = {
-        successOrNot: "N",
-        statusCode: "UNKNOWN_ERROR",
+        successOrNot: 'N',
+        statusCode: 'UNKNOWN_ERROR',
         data: {},
       };
 
-      if (error.response && error.response.status.toString() === "401") {
-        window.location.assign("/login");
+      if (error.response && error.response.status.toString() === '401') {
+        window.location.assign('/login');
       }
 
       return unknownError;
@@ -84,11 +81,11 @@ const getInstance = (serviceName: string, params?: any): AxiosInstance => {
 };
 
 export enum Method {
-  GET = "GET",
-  POST = "POST",
-  PUT = "PUT",
-  DELETE = "DELETE",
-  PATCH = "PATCH",
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+  PATCH = 'PATCH',
 }
 
 export interface QueryParams {
@@ -104,26 +101,21 @@ export interface ApiRequest {
 }
 
 const getQueryStringFormat = (queryParams?: QueryParams): string => {
-  if (!queryParams) return "";
+  if (!queryParams) return '';
   const keys = Object.keys(queryParams);
   const queryString = keys
-    .filter(
-      (key) => queryParams[key] !== null && queryParams[key] !== undefined
-    )
+    .filter((key) => queryParams[key] !== null && queryParams[key] !== undefined)
     .map((key) => `${key}=${encodeURIComponent(queryParams[key] as string)}`) // eslint-disable-line
-    .join("&");
-  return queryString ? `?${queryString}` : "";
+    .join('&');
+  return queryString ? `?${queryString}` : '';
 };
 
-export const callApi = async (
-  apiRequest: ApiRequest
-): Promise<CommonResponse> => {
-  const url: string =
-    apiRequest.url + getQueryStringFormat(apiRequest?.queryParams);
+export const callApi = async (apiRequest: ApiRequest): Promise<CommonResponse> => {
+  const url: string = apiRequest.url + getQueryStringFormat(apiRequest?.queryParams);
 
   let response: CommonResponse = {
-    successOrNot: "N",
-    statusCode: "UNKNOWN_ERROR",
+    successOrNot: 'N',
+    statusCode: 'UNKNOWN_ERROR',
     data: {},
   };
 
@@ -132,25 +124,16 @@ export const callApi = async (
       response = await getInstance(apiRequest.service).get(url);
       break;
     case Method.POST:
-      response = await getInstance(apiRequest.service).post(
-        url,
-        apiRequest?.bodyParams
-      );
+      response = await getInstance(apiRequest.service).post(url, apiRequest?.bodyParams);
       break;
     case Method.PUT:
-      response = await getInstance(apiRequest.service).put(
-        url,
-        apiRequest?.bodyParams
-      );
+      response = await getInstance(apiRequest.service).put(url, apiRequest?.bodyParams);
       break;
     case Method.DELETE:
       response = await getInstance(apiRequest.service).delete(url);
       break;
     case Method.PATCH:
-      response = await getInstance(apiRequest.service).patch(
-        url,
-        apiRequest?.bodyParams
-      );
+      response = await getInstance(apiRequest.service).patch(url, apiRequest?.bodyParams);
       break;
     default:
       break;

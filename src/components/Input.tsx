@@ -11,13 +11,7 @@ const Input = (props: InputProps) => {
 
   return (
     <div>
-      <input
-        value={value ?? ""}
-        placeholder={placeholder}
-        onChange={onChange}
-        ref={ref}
-        {...rest}
-      />
+      <input value={value ?? ''} placeholder={placeholder} onChange={onChange} ref={ref} {...rest} />
     </div>
   );
 };

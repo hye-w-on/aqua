@@ -1,11 +1,8 @@
-import { MemberProfile } from "../models/Member";
-import { callApi, CommonResponse, Method, Service } from "../utils/ApiUtil";
+import { MemberProfile } from '../models/Member';
+import { callApi, CommonResponse, Method, Service } from '../utils/ApiUtil';
 
 const sessionApi = {
-  socialLogin: async (
-    socialPlatform: string,
-    authCode: string
-  ): Promise<CommonResponse<any>> => {
+  socialLogin: async (socialPlatform: string, authCode: string): Promise<CommonResponse<any>> => {
     return callApi({
       service: Service.AQUA_BE,
       url: `/v1/session/social`,
@@ -17,12 +14,10 @@ const sessionApi = {
     });
   },
 
-  socialSignUp: async (
-    memberProfile: MemberProfile
-  ): Promise<CommonResponse<any>> => {
+  socialSignUp: async (memberProfile: MemberProfile): Promise<CommonResponse<any>> => {
     return callApi({
       service: Service.AQUA_BE,
-      url: "/v1/member",
+      url: '/v1/member',
       method: Method.POST,
       bodyParams: memberProfile,
     });

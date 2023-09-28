@@ -1,29 +1,29 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import sessionApi from "../api/session";
-import Input from "../components/Input";
-import ProfileImg from "../components/ProfileImg";
-import { MemberProfile } from "../models/Member";
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import sessionApi from '../api/session';
+import Input from '../components/Input';
+import ProfileImg from '../components/ProfileImg';
+import { MemberProfile } from '../models/Member';
 
 const SignUp = () => {
   const { state } = useLocation();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [memberProfile, setMemberProfile] = useState<MemberProfile>({
-    socialPlatform: "",
-    socialAccessToken: "",
-    email: "",
-    nickname: "",
-    profileImageUrl: "",
-    selfIntroduction: "",
-    birthday: "",
-    gender: "",
+    socialPlatform: '',
+    socialAccessToken: '',
+    email: '',
+    nickname: '',
+    profileImageUrl: '',
+    selfIntroduction: '',
+    birthday: '',
+    gender: '',
   });
 
   const handleSignUp = async () => {
     const response = await sessionApi.socialSignUp(memberProfile);
-    if (response.successOrNot === "Y") {
-      navigate("/", { replace: true });
+    if (response.successOrNot === 'Y') {
+      navigate('/', { replace: true });
     }
   };
 
@@ -36,26 +36,20 @@ const SignUp = () => {
   return (
     <div>
       회원가입
-      {memberProfile.profileImageUrl && (
-        <ProfileImg src={memberProfile.profileImageUrl} />
-      )}
+      {memberProfile.profileImageUrl && <ProfileImg src={memberProfile.profileImageUrl} />}
       <Input
         placeholder="Email"
-        value={memberProfile.email ?? ""}
-        onChange={(e) =>
-          setMemberProfile({ ...memberProfile, email: e.target.value })
-        }
+        value={memberProfile.email ?? ''}
+        onChange={(e) => setMemberProfile({ ...memberProfile, email: e.target.value })}
       />
       <Input
         placeholder="닉네임"
-        value={memberProfile.nickname ?? ""}
-        onChange={(e) =>
-          setMemberProfile({ ...memberProfile, nickname: e.target.value })
-        }
+        value={memberProfile.nickname ?? ''}
+        onChange={(e) => setMemberProfile({ ...memberProfile, nickname: e.target.value })}
       />
       <Input
         placeholder="자기소개"
-        value={memberProfile.selfIntroduction ?? ""}
+        value={memberProfile.selfIntroduction ?? ''}
         onChange={(e) =>
           setMemberProfile({
             ...memberProfile,
@@ -65,10 +59,8 @@ const SignUp = () => {
       />
       <Input
         placeholder="생일"
-        value={memberProfile.birthday ?? ""}
-        onChange={(e) =>
-          setMemberProfile({ ...memberProfile, birthday: e.target.value })
-        }
+        value={memberProfile.birthday ?? ''}
+        onChange={(e) => setMemberProfile({ ...memberProfile, birthday: e.target.value })}
       />
       <button onClick={handleSignUp}>Sign Up</button>
     </div>
