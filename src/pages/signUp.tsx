@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import sessionApi from '../api/session';
+import sessionApi from '../rest-api/session';
 import Input from '../components/Input';
 import ProfileImg from '../components/ProfileImg';
 import { MemberProfile } from '../models/Member';

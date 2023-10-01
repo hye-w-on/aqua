@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import sessionApi from '../api/session';
+import sessionApi from '../rest-api/session';
 import { SessionInfo, setSessionInfo } from '../utils/SessionUtil';
 
 const SocialRedirectHandler = () => {

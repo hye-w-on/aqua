@@ -1,12 +1,9 @@
 ### Version
 
 "react": "^18.2.0"
-
 "typescript": "^4.9.4"
-
 "react-router-dom": "^6.7.0"
-
-"styled-components": "^5.3.6",
+"react-query": "^3.39.3"
 
 ### 기능(사용기술)
 
@@ -14,6 +11,12 @@
 UI freamwork 미사용 (MUI, Bootstrap 참고)
 
 ### dev
+
+#### Styling
+
+"styled-components": "^5.3.6",
+"@emotion/react": "^11.10.5"
+"@emotion/styled": "^11.10.5"
 
 #### Mui
 
