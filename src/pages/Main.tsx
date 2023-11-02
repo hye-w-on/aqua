@@ -1,7 +1,8 @@
-import Notice from './Notice';
+import HeaderBar from './layout/HeaderBar';
+import HorizonMenu from './layout/HorizonMenu';
 
 const Main = () => {
-  return <Notice />;
+  return <div>test</div>;
 };
 
 export default Main;
