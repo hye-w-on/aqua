@@ -4,3 +4,8 @@ export enum CrudCode {
   UPDATE = 'U',
   DELETE = 'D',
 }
+
+export enum languageCode {
+  KO = 'ko',
+  EN = 'en',
+}
