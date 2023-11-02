@@ -1,12 +1,13 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
+axios.defaults.withCredentials = true; //Cookies 전달을 위해 설정
 export interface RestApiRequest {
   url: string;
   method: Method;
   service: string; //Service;
   queryParams?: URLSearchParams;
-  bodyParams?: object;
   headers?: object;
+  body?: object;
   responsType?: XMLHttpRequestResponseType;
 }
 
@@ -70,7 +71,7 @@ const getInstance = (request: RestApiRequest): AxiosInstance => {
     case Method.PUT:
       config = {
         baseURL: baseURL,
-        timeout: 1000,
+        timeout: 3000,
         headers: request?.headers || {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -113,25 +114,22 @@ const getInstance = (request: RestApiRequest): AxiosInstance => {
 
       if (commonResponse.statusCode && commonResponse.statusCode === 'SESSION_EXPIRE') {
         sessionStorage.clear();
-        window.location.assign('/login'); //컴포넌트가 아니면 router 라이브러리 사용이 불가하기 때문
+        // console.log('SESSION_EXPIRE');
+        // window.location.assign('/login'); //컴포넌트가 아니면 router 라이브러리 사용이 불가하기 때문
       }
       return commonResponse;
     },
 
     async (error: any): Promise<any> => {
-      const unknownError: RestApiResponse = {
-        successOrNot: 'N',
-        statusCode: 'UNKNOWN_ERROR',
-        data: {},
-      };
-
       if (error.response && error.response.status.toString() === '401') {
-        window.location.assign('/login');
+        // window.location.assign('/login');
+        console.log('401 UNAUTHORIZED');
       }
 
-      return unknownError;
+      return Promise.reject(error); //이렇게 넘겨야 react query에서 에러를 잡을 수 있음
     }
   );
+
   return instance;
 };
 
@@ -150,7 +148,7 @@ const getQueryStringFormat = (queryParams?: QueryParams): string => {
   return queryString ? `?${queryString}` : '';
 };
 
-export const callApi = async (apiRequest: RestApiRequest): Promise<RestApiResponse> => {
+export const callRestApi = async (apiRequest: RestApiRequest): Promise<RestApiResponse> => {
   //const url: string = apiRequest.url + getQueryStringFormat(apiRequest?.queryParams);
 
   let response: RestApiResponse = {
@@ -164,16 +162,16 @@ export const callApi = async (apiRequest: RestApiRequest): Promise<RestApiRespon
       response = await getInstance(apiRequest).get(apiRequest.url);
       break;
     case Method.POST:
-      response = await getInstance(apiRequest).post(apiRequest.url, apiRequest?.bodyParams || {});
+      response = await getInstance(apiRequest).post(apiRequest.url, apiRequest?.body || {});
       break;
     case Method.PUT:
-      response = await getInstance(apiRequest).put(apiRequest.url, apiRequest?.bodyParams || {});
+      response = await getInstance(apiRequest).put(apiRequest.url, apiRequest?.body || {});
       break;
     case Method.DELETE:
       response = await getInstance(apiRequest).delete(apiRequest.url);
       break;
     case Method.PATCH:
-      response = await getInstance(apiRequest).patch(apiRequest.url, apiRequest?.bodyParams || {});
+      response = await getInstance(apiRequest).patch(apiRequest.url, apiRequest?.body || {});
       break;
     default:
       break;
