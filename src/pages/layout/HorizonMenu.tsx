@@ -38,6 +38,10 @@ const mockMenus: Menu[] = [
     ],
   },
   {
+    menuName: 'BBS',
+    menuPath: '/bbs',
+  },
+  {
     menuName: 'Reservation',
     menuPath: '/reservation',
   },

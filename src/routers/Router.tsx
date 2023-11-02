@@ -7,6 +7,7 @@ import EmployeeLogin from '../pages/EmployeeLogin';
 import SocialLogin from '../pages/SocialLogin';
 import FeedPage from '../pages/FeedPage';
 import MenuManagementPage from '../pages/MenuManagementPage';
+import BbsListPage from '../pages/BbsListPage';
 
 function Router() {
   return (
@@ -17,10 +18,11 @@ function Router() {
       <Route path="/login/employee" element={<EmployeeLogin />} />
       <Route path="/oauth/:socialPlatform" element={<SocialRedirectHandler />} />
       {/* service */}
+      <Route path="/bbs" element={<BbsListPage />} />
       <Route path="/reservation" element={<ReservationPage />} />
       <Route path="/feed" element={<FeedPage />} />
       {/* admin */}
-      <Route path="//menu-management" element={<MenuManagementPage />} />
+      <Route path="/menu-management" element={<MenuManagementPage />} />
     </Routes>
   );
 }
