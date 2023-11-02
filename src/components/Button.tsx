@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Button, { ButtonProps } from '@mui/material/Button';
+//icon
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
 export const StyledButton = styled(Button)``;
 
@@ -13,16 +15,29 @@ export const BasicButton = (props: ButtonProps) => {
   );
 };
 
-export const ActionSmailButton = (props: ButtonProps) => {
+export const ActionButton = (props: ButtonProps) => {
   return (
-    <StyledActionSmailButton variant="outlined" size="small" {...props}>
+    <StyledActionButton variant="outlined" size="small" {...props}>
       {props.children}
-    </StyledActionSmailButton>
+    </StyledActionButton>
   );
 };
 
-const StyledActionSmailButton = styled(Button)`
+const StyledActionButton = styled(Button)`
   min-width: 0px;
   padding: 5px;
+  margin: 1px;
+`;
+
+export const ActionDeleteButton = (props: ButtonProps) => {
+  return (
+    <StyledActionDeleteButton variant="outlined" size="small" {...props}>
+      <DeleteForeverRoundedIcon />
+    </StyledActionDeleteButton>
+  );
+};
+const StyledActionDeleteButton = styled(Button)`
+  min-width: 0px;
+  padding: 1px;
   margin: 1px;
 `;

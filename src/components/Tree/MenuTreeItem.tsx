@@ -13,7 +13,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { BasicTextField } from '../TextField';
-import { ActionSmailButton } from '../Button';
+import { ActionButton } from '../Button';
 import { CrudCode } from '../../models/Common.enum';
 
 interface TreeItemProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
@@ -85,15 +85,15 @@ const MenuTreeItem = (props: TreeItemProps) => {
           </span>
         )}
       </MenuInfo>
-      <ActionSmailButton
+      <ActionButton
         onClick={() => {
           setIsExpand(true);
           insertChildMenuItem(props.menuData.menuId);
         }}
       >
         <AddIcon fontSize="inherit" />
-      </ActionSmailButton>
-      <ActionSmailButton
+      </ActionButton>
+      <ActionButton
         onClick={() => {
           if (props.menuData.action === CrudCode.CREATE) {
             deleteMenuItem(props.menuData.tempMenuId || '');
@@ -103,8 +103,8 @@ const MenuTreeItem = (props: TreeItemProps) => {
         }}
       >
         <RemoveIcon fontSize="inherit" />
-      </ActionSmailButton>
-      <ActionSmailButton
+      </ActionButton>
+      <ActionButton
         onClick={() => {
           if (isEditing) {
             updateMenuItem(props.menuData.menuId, {
@@ -118,23 +118,23 @@ const MenuTreeItem = (props: TreeItemProps) => {
         }}
       >
         <EditIcon fontSize="inherit" />
-      </ActionSmailButton>
+      </ActionButton>
       {/* 정렬순서 위로 */}
-      <ActionSmailButton
+      <ActionButton
         onClick={() => {
           updateMenuOrder(props.menuData, -1);
         }}
       >
         <KeyboardArrowUpIcon fontSize="inherit" />
-      </ActionSmailButton>
+      </ActionButton>
       {/* 정렬순서 아래로 */}
-      <ActionSmailButton
+      <ActionButton
         onClick={() => {
           updateMenuOrder(props.menuData, 1);
         }}
       >
         <KeyboardArrowDownIcon fontSize="inherit" />
-      </ActionSmailButton>
+      </ActionButton>
       {/* 메뉴 부가정보*/}
       {props.menuData.menuId}|{props.menuData.sortOrder} | {props.menuData.tempMenuId}
       {/* 하위 메뉴 */}
