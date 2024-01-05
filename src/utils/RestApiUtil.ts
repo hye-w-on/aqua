@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import useIsLoadingStore from 'store/LoadingStore';
 
 axios.defaults.withCredentials = true; //Cookies 전달을 위해 설정
 export interface RestApiRequest {
@@ -34,6 +35,7 @@ export enum ServicePort {
 
 const getInstance = (request: RestApiRequest): AxiosInstance => {
   axios.defaults.headers.post['Content-Type'] = 'application/json';
+  useIsLoadingStore.getState().setIsLoading(true); //js이기 때문에 setIsLoading로 바로 사용불가
 
   let baseURL = '';
   switch (request.service) {
@@ -87,7 +89,8 @@ const getInstance = (request: RestApiRequest): AxiosInstance => {
       if (config?.headers) {
         //config.headers["x-api-key"] = process.env.REACT_APP_API_KEY || "";
         //config.headers["x-correlation-id"] = "";
-        //config.headers["x-session-id"] = "sessionId";
+        config.headers['x-redis-session-id'] = sessionStorage.getItem('x-redis-session-id');
+        config.headers['x-language-code'] = sessionStorage.getItem('languageCode');
         config.headers.Authorization = localStorage.getItem('idToken');
       }
       return config;
@@ -99,6 +102,7 @@ const getInstance = (request: RestApiRequest): AxiosInstance => {
 
   instance.interceptors.response.use(
     async (response: any): Promise<any> => {
+      useIsLoadingStore.getState().setIsLoading(false);
       //응답값이 file이라면, 나중에 util 분리
       if (response.data instanceof Blob) {
         const CommonBlobResponse: RestApiResponse<Blob> = {
@@ -121,6 +125,7 @@ const getInstance = (request: RestApiRequest): AxiosInstance => {
     },
 
     async (error: any): Promise<any> => {
+      useIsLoadingStore.getState().setIsLoading(false);
       if (error.response && error.response.status.toString() === '401') {
         // window.location.assign('/login');
         console.log('401 UNAUTHORIZED');
