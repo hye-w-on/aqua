@@ -10,34 +10,6 @@ interface Menu {
 
 const mockMenus: Menu[] = [
   {
-    menuName: '메뉴1',
-    menuPath: '/menu1',
-    subMenus: [
-      {
-        menuName: '메뉴1-1',
-        menuPath: '/menu1-1',
-      },
-      {
-        menuName: '메뉴1-2',
-        menuPath: '/menu1-2',
-      },
-    ],
-  },
-  {
-    menuName: '메뉴2',
-    menuPath: '/menu2',
-    subMenus: [
-      {
-        menuName: '메뉴2-1',
-        menuPath: '/menu2-1',
-      },
-      {
-        menuName: '메뉴2-2',
-        menuPath: '/menu2-2',
-      },
-    ],
-  },
-  {
     menuName: 'BBS',
     menuPath: '/bbs',
   },
@@ -51,12 +23,12 @@ const mockMenus: Menu[] = [
   },
   {
     menuName: 'Menu Management',
-    menuPath: '/menu-management',
+    menuPath: '/admin/menu-management',
   },
 ];
 
 const HorizonMenu = () => {
-  const [menus, setMenus] = useState<Menu[]>(mockMenus);
+  const [menus] = useState<Menu[]>(mockMenus);
   return (
     <span>
       {menus &&

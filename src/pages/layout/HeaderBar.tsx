@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import styled from '@emotion/styled';
 import { languageCode } from 'models/Common.enum';
+import { BasicButton } from 'components/Button';
 
 const HeaderBar = () => {
   const { t } = useTranslation();
@@ -19,32 +20,28 @@ const HeaderBar = () => {
 
   return (
     <>
-      <Span>
+      <BasicButton>
         <Link to="/login/social">Social Login</Link>
-      </Span>
-      <Span>
+      </BasicButton>
+      <BasicButton>
         <Link to="/signup">Sign Up</Link>
-      </Span>
-      <Span>
-        <EmployeeLogin />
-      </Span>
-      <div>
-        <button
-          onClick={() => {
-            handleChangeLanguage(languageCode.EN);
-          }}
-        >
-          English
-        </button>
-        <button
-          onClick={() => {
-            handleChangeLanguage(languageCode.KO);
-          }}
-        >
-          Korean
-        </button>
-        <div style={{ margin: '10px' }}>{t('language')}</div>
-      </div>
+      </BasicButton>
+      <EmployeeLogin />
+      <BasicButton
+        onClick={() => {
+          handleChangeLanguage(languageCode.EN);
+        }}
+      >
+        English
+      </BasicButton>
+      <BasicButton
+        onClick={() => {
+          handleChangeLanguage(languageCode.KO);
+        }}
+      >
+        Korean
+      </BasicButton>
+      <Span style={{ margin: '10px' }}>{t('language')}</Span>
       <hr />
     </>
   );
