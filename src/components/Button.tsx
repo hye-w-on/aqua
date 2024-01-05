@@ -4,15 +4,17 @@ import Button, { ButtonProps } from '@mui/material/Button';
 //icon
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
-export const StyledButton = styled(Button)``;
+const StyledBasicButton = styled.button`
+  margin: 5px;
+  padding: 3px 10px;
+  vertical-align: middle;
+  border-radius: 2px;
+  border: 1px solid black;
+`;
 
-//const BasicButton: React.FC<ButtonProps> = ({ children }) => { //react/prop-types Lint error
-export const BasicButton = (props: ButtonProps) => {
-  return (
-    <StyledButton variant="contained" size="small" {...props}>
-      {props.children}
-    </StyledButton>
-  );
+//const BasicButton: React.FC<> = ({ children }) => { //react/prop-types Lint error
+export const BasicButton = (props: React.HtmlHTMLAttributes<HTMLButtonElement>) => {
+  return <StyledBasicButton {...props}>{props.children}</StyledBasicButton>;
 };
 
 export const ActionButton = (props: ButtonProps) => {
