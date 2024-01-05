@@ -33,125 +33,129 @@ const MenuTreeItem = (props: TreeItemProps) => {
 
   const temp = props.isExpand ? true : props?.expandLevel ? (props.expandLevel >= props.level ? false : true) : false;
   const [isExpand, setIsExpand] = useState(temp);
-  const [ischecked, setIsChecked] = useState<boolean>(props.isChecked || false);
+  //const [isChecked, setIsChecked] = useState<boolean>(props.isChecked || false);
   const [editedMenuName, setEditedMenuName] = useState<string>(props.menuData.menuName);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   return (
     <StyledTreeItem>
-      <MenuInfo>
-        <span
-          onClick={() => {
-            setIsExpand((prev) => !prev);
-          }}
-        >
-          {/* 아이콘 */}
-          {props.menuData?.subMenus && props.menuData.subMenus.length > 0 ? (
-            isExpand ? (
-              <ArrowDropUpIcon />
-            ) : (
-              <ArrowDropDownIcon />
-            )
-          ) : (
-            <ArrowRightIcon />
-          )}
-        </span>
-        {/* 체크박스 
-      {props.hasCheckBox && (
-        <input
-          type="checkbox"
-          checked={ischecked}
-          onChange={() => {
-            // setIsChecked((prev) => !prev);
-          }}
-        />
-      )}*/}
-        {/* 메뉴명 */}
-        {isEditing ? (
-          <BasicTextField
-            //label="ManuName"
-            value={editedMenuName}
-            onChange={(e) => {
-              setEditedMenuName(e.target.value);
-            }}
-          />
-        ) : (
+      <>
+        <MenuInfo>
           <span
             onClick={() => {
               setIsExpand((prev) => !prev);
             }}
           >
-            {props.menuData.menuName}
+            {/* 아이콘 */}
+            {props.menuData?.subMenus && props.menuData.subMenus.length > 0 ? (
+              isExpand ? (
+                <ArrowDropUpIcon />
+              ) : (
+                <ArrowDropDownIcon />
+              )
+            ) : (
+              <ArrowRightIcon />
+            )}
           </span>
-        )}
-      </MenuInfo>
-      <ActionButton
-        onClick={() => {
-          setIsExpand(true);
-          insertChildMenuItem(props.menuData.menuId);
-        }}
-      >
-        <AddIcon fontSize="inherit" />
-      </ActionButton>
-      <ActionButton
-        onClick={() => {
-          if (props.menuData.action === CrudCode.CREATE) {
-            deleteMenuItem(props.menuData.tempMenuId || '');
-          } else {
-            deleteMenuItem(props.menuData.menuId);
-          }
-        }}
-      >
-        <RemoveIcon fontSize="inherit" />
-      </ActionButton>
-      <ActionButton
-        onClick={() => {
-          if (isEditing) {
-            updateMenuItem(props.menuData.menuId, {
-              ...props.menuData,
-              menuName: editedMenuName,
-            });
-            setIsEditing(false);
-          } else {
-            setIsEditing(true);
-          }
-        }}
-      >
-        <EditIcon fontSize="inherit" />
-      </ActionButton>
-      {/* 정렬순서 위로 */}
-      <ActionButton
-        onClick={() => {
-          updateMenuOrder(props.menuData, -1);
-        }}
-      >
-        <KeyboardArrowUpIcon fontSize="inherit" />
-      </ActionButton>
-      {/* 정렬순서 아래로 */}
-      <ActionButton
-        onClick={() => {
-          updateMenuOrder(props.menuData, 1);
-        }}
-      >
-        <KeyboardArrowDownIcon fontSize="inherit" />
-      </ActionButton>
-      {/* 메뉴 부가정보*/}
-      {props.menuData.menuId}|{props.menuData.sortOrder} | {props.menuData.tempMenuId}
-      {/* 하위 메뉴 */}
-      {props.children}
-      {props.menuData.subMenus &&
-        isExpand &&
-        props.menuData.subMenus.map((subMenu, index) => {
-          return (
-            <MenuTreeItem
-              key={index}
-              level={props.level + 1}
-              menuData={subMenu}
-              expandLevel={props.expandLevel}
-              hasCheckBox={props.hasCheckBox}
+          {props.hasCheckBox && (
+            <input
+              type="checkbox"
+              checked={props.isChecked}
+              onChange={() => {
+                updateMenuItem(props.menuData.menuNo, {
+                  ...props.menuData,
+                  isChecked: props.isChecked ? !props.isChecked : true,
+                });
+              }}
             />
-          );
-        })}
+          )}
+          {/* 메뉴명 */}
+          {isEditing ? (
+            <BasicTextField
+              //label="ManuName"
+              value={editedMenuName}
+              onChange={(e) => {
+                setEditedMenuName(e.target.value);
+              }}
+            />
+          ) : (
+            <span
+              onClick={() => {
+                setIsExpand((prev) => !prev);
+              }}
+            >
+              {props.menuData.menuName}
+            </span>
+          )}
+        </MenuInfo>
+        <ActionButton
+          onClick={() => {
+            setIsExpand(true);
+            insertChildMenuItem(props.menuData.menuNo);
+          }}
+        >
+          <AddIcon fontSize="inherit" />
+        </ActionButton>
+        <ActionButton
+          onClick={() => {
+            if (props.menuData.action === CrudCode.CREATE) {
+              deleteMenuItem(props.menuData.tempmenuNo || '');
+            } else {
+              deleteMenuItem(props.menuData.menuNo);
+            }
+          }}
+        >
+          <RemoveIcon fontSize="inherit" />
+        </ActionButton>
+        <ActionButton
+          onClick={() => {
+            if (isEditing) {
+              updateMenuItem(props.menuData.menuNo, {
+                ...props.menuData,
+                menuName: editedMenuName,
+              });
+              setIsEditing(false);
+            } else {
+              setIsEditing(true);
+            }
+          }}
+        >
+          <EditIcon fontSize="inherit" />
+        </ActionButton>
+        {/* 정렬순서 위로 */}
+        <ActionButton
+          onClick={() => {
+            updateMenuOrder(props.menuData, -1);
+          }}
+        >
+          <KeyboardArrowUpIcon fontSize="inherit" />
+        </ActionButton>
+        {/* 정렬순서 아래로 */}
+        <ActionButton
+          onClick={() => {
+            updateMenuOrder(props.menuData, 1);
+          }}
+        >
+          <KeyboardArrowDownIcon fontSize="inherit" />
+        </ActionButton>
+        {/* 메뉴 부가정보*/}
+        {props.menuData.menuNo} | {props.menuData.sortOrder} | {props.menuData.tempmenuNo} | {props.menuData.action}
+        {/* 하위 메뉴 */}
+        {props.children}
+        {props.menuData.subMenus &&
+          isExpand &&
+          props.menuData.subMenus.map((subMenu, index) => {
+            return (
+              <MenuTreeItem
+                key={index}
+                level={props.level + 1}
+                menuData={subMenu}
+                expandLevel={props.expandLevel}
+                hasCheckBox={props.hasCheckBox}
+              />
+            );
+          })}
+      </>
     </StyledTreeItem>
   );
 };
