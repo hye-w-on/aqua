@@ -1,8 +1,7 @@
-import HeaderBar from './layout/HeaderBar';
-import HorizonMenu from './layout/HorizonMenu';
+import Sample from './Sample';
 
 const Main = () => {
-  return <div>test</div>;
+  return <Sample />;
 };
 
 export default Main;

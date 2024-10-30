@@ -1,19 +1,15 @@
 type FormControlElement = HTMLInputElement | HTMLTextAreaElement;
-interface InputProps {
+interface BasicInputProps {
   value?: string;
   placeholder?: string;
   onChange?: React.ChangeEventHandler<FormControlElement>;
   ref?: any;
 }
 
-const Input = (props: InputProps) => {
+const BasicInput = (props: BasicInputProps) => {
   const { placeholder, value, onChange, ref, ...rest } = { ...props };
 
-  return (
-    <div>
-      <input value={value ?? ''} placeholder={placeholder} onChange={onChange} ref={ref} {...rest} />
-    </div>
-  );
+  return <input value={value ?? ''} placeholder={placeholder} onChange={onChange} ref={ref} {...rest} />;
 };
 
-export default Input;
+export default BasicInput;

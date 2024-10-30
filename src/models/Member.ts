@@ -1,6 +1,6 @@
 export interface MemberProfile {
   socialPlatform: string;
-  socialAccessToken: string;
+  socialId: string;
   email: string;
   nickname: string;
   profileImageUrl: string;

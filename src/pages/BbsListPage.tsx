@@ -35,6 +35,7 @@ const BbsListPage = () => {
     isFetching,
     isFetched,
     isSuccess,
+    refetch, //쿼리 재조회 함수
   } = useBbsPosts(selectedPageNo, bbsPostCondition);
 
   const deleteMutation = useMutation((postNo: string) => deleteBbsPostApi(postNo));
